@@ -22,10 +22,12 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.system.ApplicationPidFileWriter;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication(scanBasePackages = {"org.apache.ambari.solr.metrics"})
+@PropertySource(value={"classpath:infra-solr-metrics.properties"}, ignoreResourceNotFound = true)
 public class SolrMetricsApplication {
 
   public static void main(String[] args) throws Exception {

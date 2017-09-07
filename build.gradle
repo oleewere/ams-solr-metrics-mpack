@@ -29,6 +29,10 @@ buildscript {
   }
 }
 
+repositories {
+  mavenLocal()
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'distribution'
@@ -75,4 +79,5 @@ jar {
 
 dependencies {
   compile("org.springframework.boot:spring-boot-starter:1.5.6.RELEASE")
+  compile("org.apache.ambari:ambari-metrics-common:2.5.1.0.0")
 }

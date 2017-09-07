@@ -18,19 +18,34 @@
  */
 package org.apache.ambari.solr.metrics.task;
 
+import org.apache.ambari.solr.metrics.metrics.SolrMetricsSink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class SceduledSolrMetricsTask {
 
   private static final Logger log = LoggerFactory.getLogger(SceduledSolrMetricsTask.class);
 
-  @Scheduled(fixedDelayString = "${infra-solr.metrics.push.rate}")
+  @Autowired
+  private SolrMetricsSink solrMetricsSink;
+
+  @Scheduled(fixedDelayString = "${infra.solr.metrics.push.rate}")
   public void reportCurrentTime() {
     log.info("Do something...");
+    solrMetricsSink.emitMetrics(null);
   }
+
+  @PostConstruct
+  public void init() {
+    solrMetricsSink.init();
+  }
+
+
 
 }
