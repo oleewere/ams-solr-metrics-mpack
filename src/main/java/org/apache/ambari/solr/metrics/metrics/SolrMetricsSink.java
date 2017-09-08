@@ -47,6 +47,15 @@ public class SolrMetricsSink extends AbstractTimelineMetricsSink {
   @Value("${infra.solr.metrics.ams.hostname:}")
   private String hostName;
 
+  @Value("${infra.solr.metrics.ams.ssl.keystore.path:}")
+  private String sslKeystorePath;
+
+  @Value("${infra.solr.metrics.ams.ssl.keystore.type:}")
+  private String sslKeystoreType;
+
+  @Value("${infra.solr.metrics.ams.ssl.keystore.password:}")
+  private String sslKeystorePassword;
+
   @Override
   public void init() {
     if (StringUtils.isEmpty(hostName)) {
@@ -62,6 +71,13 @@ public class SolrMetricsSink extends AbstractTimelineMetricsSink {
       }
     }
     super.init();
+    if (collectorHosts.isEmpty()) {
+      logger.error("No Metric collector configured.");
+    } else {
+      if (protocol.contains("https")) {
+        loadTruststore(sslKeystorePath, sslKeystoreType, sslKeystorePassword);
+      }
+    }
   }
 
   @Override
