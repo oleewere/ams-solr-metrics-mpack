@@ -40,8 +40,8 @@ apply plugin: 'nebula.ospackage'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'project-report'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 ext.src = 'src/main/resources/'
 

@@ -111,7 +111,7 @@ public class SolrMetricsSink extends AbstractTimelineMetricsSink {
   }
 
   @Override
-  protected String getHostname() {
+  public String getHostname() {
     return this.hostName;
   }
 
