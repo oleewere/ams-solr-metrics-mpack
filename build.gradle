@@ -57,7 +57,7 @@ task wrapper(type: Wrapper) {
 distributions {
   main {
     contents {
-      baseName = 'infra-solr-metrics-ambari-mpack'
+      baseName = 'ams-solr-metrics-mpack'
       from { src + 'mpack'}
 
       from { src + 'mpack/mpack.json' }

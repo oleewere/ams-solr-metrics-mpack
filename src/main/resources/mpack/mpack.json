@@ -1,6 +1,6 @@
 {
   "type": "full-release",
-  "name": "infra-solr-metrics-ambari-mpack",
+  "name": "ams-solr-metrics-mpack",
   "version": "1.0.0",
   "description": "Infra Solr Metrics Management Pack",
   "prerequisites": {
