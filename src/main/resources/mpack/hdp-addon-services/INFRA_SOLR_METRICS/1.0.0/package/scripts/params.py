@@ -74,4 +74,4 @@ infra_solr_metrics_properties['infra.solr.metrics.ams.collector.protocol'] = for
 infra_solr_metrics_env_content = config['configurations']['infra-solr-metrics-env']['content']
 infra_solr_metrics_log4j2_content = config['configurations']['infra-solr-metrics-log4j2']['content']
 
-infra_solr_metrics_package_download_location = config['configuration']['infra-solr-metrics-env']['download_location']
+infra_solr_metrics_package_download_location = config['configurations']['infra-solr-metrics-env']['download_location']
