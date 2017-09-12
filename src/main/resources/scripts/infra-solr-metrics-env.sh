@@ -10,4 +10,5 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 export PID_FILE=/var/run/infra-solr-metrics/infra-solr-metrics.pid
+export LOGFILE="infra-solr-metrics.out"
 export INFRA_SOLR_METRICS_OPTS=""

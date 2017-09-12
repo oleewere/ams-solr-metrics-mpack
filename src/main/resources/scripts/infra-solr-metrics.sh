@@ -16,7 +16,11 @@ source $sdir/infra-solr-metrics-env.sh
 JVM="java"
 
 if [ -x $JAVA_HOME/bin/java ]; then
-    JVM=$JAVA_HOME/bin/java
+  JVM=$JAVA_HOME/bin/java
 fi
 
-nohup $JVM $INFRA_SOLR_METRICS_OPTS -classpath "$sdir:$sdir/libs/*" org.apache.ambari.solr.metrics.SolrMetricsApplication ${1+"$@"} &
+if [ -z "$LOGFILE" ]; then
+  LOGFILE=infra-solr-metrics.out
+fi
+
+nohup $JVM $INFRA_SOLR_METRICS_OPTS -jar "$sdir/libs/ams-solr-metrics-mpack-1.0.0.jar" ${1+"$@"} > $LOGFILE 2>&1 &
