@@ -23,4 +23,4 @@ if [ -z "$LOGFILE" ]; then
   LOGFILE=infra-solr-metrics.out
 fi
 
-nohup $JVM $INFRA_SOLR_METRICS_OPTS -jar "$sdir/libs/ams-solr-metrics-mpack-1.0.0.jar" ${1+"$@"} > $LOGFILE 2>&1 &
+nohup $JVM $INFRA_SOLR_METRICS_OPTS -jar "$sdir/libs/ambari-solr-metrics-sink-1.0.0.jar" ${1+"$@"} > $LOGFILE 2>&1 &

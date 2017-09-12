@@ -75,7 +75,7 @@ task buildTar(dependsOn: [clean, distTar]) {
 }
 
 jar {
-  baseName = 'ams-solr-metrics-mpack'
+  baseName = 'ambari-solr-metrics-sink'
   version = '1.0.0'
 }
 
