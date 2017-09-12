@@ -45,6 +45,7 @@ public class SolrJmxConnectionConfig {
     if (StringUtils.isNotEmpty(serviceUrl)) {
       MBeanServerConnectionFactoryBean mBeanServerConnectionFactoryBean = new MBeanServerConnectionFactoryBean();
       mBeanServerConnectionFactoryBean.setServiceUrl(serviceUrl);
+      mBeanServerConnectionFactoryBean.setConnectOnStartup(false);
       return mBeanServerConnectionFactoryBean;
     } else {
       logger.warn("JMX service url for Solr is missing. JMX export to AMS won't work.");
@@ -56,6 +57,8 @@ public class SolrJmxConnectionConfig {
   public  ThreadPoolTaskScheduler  taskScheduler(){
     ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
     taskScheduler.setPoolSize(taskSchedulerThreadPoolSize);
-    return  taskScheduler;
+    taskScheduler.setThreadNamePrefix("infra-solr-metrics-shipper-");
+    return taskScheduler;
   }
+
 }
