@@ -89,7 +89,7 @@ dependencies {
   compile("org.apache.ambari:ambari-metrics-common:2.5.1.0.0")
 }
 
-task createPackage(type: Copy, dependsOn: [build]) {
+task createPackage(type: Copy, dependsOn: [buildTar]) {
   into "$buildDir/package/"
   into('libs') {
     from "$buildDir/libs/"
