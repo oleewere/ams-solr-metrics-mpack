@@ -47,8 +47,8 @@
   <property>
     <name>download_location</name>
     <display-name>Package download location</display-name>
-    <description>URL for downloading infra-solr-metrics package</description>
-    <value></value>
+    <description>URL for downloading infra-solr-metrics package (can http:// or file:// scheme be used as well)</description>
+    <value>https://github.com/oleewere/ams-solr-metrics-mpack/releases/download/1.0.0/ams-solr-metrics-1.0.0-1.noarch.rpm</value>
     <on-ambari-upgrade add="false"/>
   </property>
   <property>
