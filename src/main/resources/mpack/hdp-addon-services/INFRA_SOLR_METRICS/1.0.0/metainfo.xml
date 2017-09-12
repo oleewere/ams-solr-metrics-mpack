@@ -20,14 +20,14 @@
   <services>
     <service>
       <name>INFRA_SOLR_METRICS</name>
-      <displayName>Infra Metrics</displayName>
+      <displayName>Infra Solr Metrics</displayName>
       <comment>External AMS Sink for Solr 5</comment>
       <version>1.0.0</version>
       <components>
         <component>
           <name>INFRA_SOLR_METRICS</name>
           <timelineAppid>infra-solr-metrics</timelineAppid>
-          <displayName>Infra Solr Metrics</displayName>
+          <displayName>Infra Solr Metrics Sink</displayName>
           <category>SLAVE</category>
           <cardinality>1+</cardinality>
           <versionAdvertised>false</versionAdvertised>
