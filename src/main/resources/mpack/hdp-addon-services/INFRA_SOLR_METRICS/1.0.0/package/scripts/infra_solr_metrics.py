@@ -34,7 +34,7 @@ class InfraSolrMetrics(Script):
     env.set_params(params)
     Execute('yum remove -y -t ambari-infra-solr-metrics') # remove package first -> error tolerant
     Execute('curl -k -L -o /tmp/ams-solr-metrics-1.0.0.rpm ' + params.infra_solr_metrics_package_download_location)
-    Execute('yum install -y /tmp/ams-solr-metrics.1.0.0.rpm')
+    Execute('yum install -y /tmp/ams-solr-metrics-1.0.0.rpm')
 
   def configure(self, env):
     import params
