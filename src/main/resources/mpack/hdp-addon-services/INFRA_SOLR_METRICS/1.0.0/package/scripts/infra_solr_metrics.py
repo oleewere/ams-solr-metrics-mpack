@@ -63,7 +63,7 @@ class InfraSolrMetrics(Script):
          group=params.user_group
          )
 
-    File(format("{infra_solr_metrics_conf_dir}/infra-solr-metrics-env.sh"),
+    File(format("{infra_solr_metrics_usr_dir}/infra-solr-metrics-env.sh"),
        content=InlineTemplate(params.infra_solr_metrics_env_content),
        mode=0755,
        owner=params.infra_solr_user,
