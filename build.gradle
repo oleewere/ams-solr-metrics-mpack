@@ -57,7 +57,7 @@ task wrapper(type: Wrapper) {
 distributions {
   main {
     contents {
-      baseName = 'ams-solr-metrics-mpack'
+      baseName = 'infra-solr-metrics-ambari-mpack'
       from { src + 'mpack'}
 
       from { src + 'mpack/mpack.json' }
@@ -89,7 +89,7 @@ dependencies {
   compile("org.apache.ambari:ambari-metrics-common:2.5.1.0.0")
 }
 
-task createPackage(type: Copy, dependsOn: [buildTar]) {
+task createPackage(type: Copy, dependsOn: [buildTar, build]) {
   into "$buildDir/package/"
   into('libs') {
     from "$buildDir/libs/"
