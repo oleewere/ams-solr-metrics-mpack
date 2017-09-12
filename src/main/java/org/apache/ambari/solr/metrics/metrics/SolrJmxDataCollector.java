@@ -49,8 +49,8 @@ public class SolrJmxDataCollector {
     }
     CompositeDataSupport nonHeapMemoryUsage = (CompositeDataSupport) mbsc.getAttribute(new ObjectName("java.lang:type=Memory"), "NonHeapMemoryUsage");
     // TODO: add outher metrics as well
-    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.system.processCpuLoad", cpuProcessLoad,false, "Double"));
-    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.memory.used", heapUsed.doubleValue(),false, "Long"));
+    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.system.processCpuLoad", cpuProcessLoad,true, "Double"));
+    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.memory.used", heapUsed.doubleValue(),true, "Long"));
 
     return solrNodeMetricsList;
   }
@@ -62,8 +62,24 @@ public class SolrJmxDataCollector {
     if (solrCores.length > 0) {
       for (String solrCore : solrCores) {
         List<SolrMetricsData> solrCoreMetricsList = new ArrayList<>();
-        Long adds = (Long) mbsc.getAttribute(new ObjectName(String.format("%s:type=updateHandler,id=org.apache.solr.update.DirectUpdateHandler2", solrCore)), "adds");
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.adds", adds.doubleValue(), false, "Long"));
+        ObjectName updateHandlerObjectName = new ObjectName(String.format("%s:type=updateHandler,id=org.apache.solr.update.DirectUpdateHandler2", solrCore));
+        Long adds = (Long) mbsc.getAttribute(updateHandlerObjectName, "adds");
+        Long deletesById = (Long) mbsc.getAttribute(updateHandlerObjectName, "deletesById");
+        Long deletesByQuery = (Long) mbsc.getAttribute(updateHandlerObjectName, "deletesByQuery");
+        Long docsPending = (Long) mbsc.getAttribute(updateHandlerObjectName, "docsPending");
+        Long errors = (Long) mbsc.getAttribute(updateHandlerObjectName, "errors");
+        Long transactionLogsTotalSize = (Long) mbsc.getAttribute(updateHandlerObjectName, "transaction_logs_total_size");
+        Long transactionLogsTotalNumber = (Long) mbsc.getAttribute(updateHandlerObjectName, "transaction_logs_total_number");
+
+        /* TODO: commits, autocommits, soft autocommits */
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.adds", adds.doubleValue(), true, "Long"));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.deletesById", deletesById.doubleValue(), true, "Long"));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.deletesByQuery", deletesByQuery.doubleValue(), true, "Long"));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.docsPending", docsPending.doubleValue(), true, "Long"));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.errors", errors.doubleValue(), true, "Long"));
+        // file in bytes
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.transaction_logs_total_size", transactionLogsTotalSize.doubleValue(), true, "Long"));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.transaction_logs_total_number", transactionLogsTotalNumber.doubleValue(), true, "Long"));
         metricsPerCore.put(solrCore, solrCoreMetricsList);
       }
     }

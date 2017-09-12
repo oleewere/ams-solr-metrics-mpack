@@ -67,7 +67,7 @@ public class SceduledSolrMetricsTask {
       TimelineMetrics timelineMetrics = new TimelineMetrics();
       for (SolrMetricsData solrMetricsData : nodeMetricData) {
         TimelineMetric timelineMetric = new TimelineMetric();
-        timelineMetric.setAppId("solr-host-app");
+        timelineMetric.setAppId(nodeAppName);
         timelineMetric.setMetricName(solrMetricsData.getMetricsName());
         timelineMetric.setType(solrMetricsData.getType());
         timelineMetric.setStartTime(currMs);
@@ -94,10 +94,12 @@ public class SceduledSolrMetricsTask {
         for(Map.Entry<String, List<SolrMetricsData>> entry : nodeMetricData.entrySet()) {
           TimelineMetrics timelineMetrics = new TimelineMetrics();
           for (SolrMetricsData solrMetricsData : entry.getValue()) {
-            String formattedCore = entry.getKey().replaceAll("solr/", "solr_cores.") + ".";
             TimelineMetric timelineMetric = new TimelineMetric();
             timelineMetric.setAppId(coreAppName);
-            timelineMetric.setMetricName(formattedCore + solrMetricsData.getMetricsName());
+            // TODO: use core name inside metrics name
+            //String formattedCore = entry.getKey().replaceAll("solr/", "solr_cores.") + ".";
+            //timelineMetric.setMetricName(formattedCore + solrMetricsData.getMetricsName());
+            timelineMetric.setMetricName(solrMetricsData.getMetricsName());
             timelineMetric.setType(solrMetricsData.getType());
             timelineMetric.setStartTime(currMs);
             timelineMetric.setHostName(solrMetricsSink.getHostname());
