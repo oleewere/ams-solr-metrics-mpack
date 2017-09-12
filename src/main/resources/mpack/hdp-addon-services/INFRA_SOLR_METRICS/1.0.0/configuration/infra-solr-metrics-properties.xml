@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<configuration>
+  <property>
+    <name>infra.solr.jmx.url</name>
+    <value>service:jmx:rmi:///jndi/rmi://{infra_solr_local_hostname}:{infra_solr_jmx_port}/jmxrmi</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.node.push.rate</name>
+    <value>20000</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.core.push.rate</name>
+    <value>20000</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.solr.jmx.port</name>
+    <value>{infra_solr_jmx_port}</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.ams.collector.hosts</name>
+    <value>{metrics_collector_hosts}</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.ams.collector.port</name>
+    <value>{metrics_collector_port}</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.ams.collector.protocol</name>
+    <value>{metrics_collector_protocol}</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+
+  <property>
+    <name>infra.solr.metrics.ams.ssl.keystore.path</name>
+    <value>/etc/ambari-infra-solr-metrics/conf/keys/keyStore.jks</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.ams.ssl.keystore.type</name>
+    <value>jks</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>infra.solr.metrics.ams.ssl.keystore.password</name>
+    <value>bigdata</value>
+    <description></description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+
+</configuration>

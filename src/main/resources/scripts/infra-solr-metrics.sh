@@ -9,3 +9,14 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+
+sdir="`dirname \"$0\"`"
+source $sdir/infra-solr-metrics-env.sh
+
+JVM="java"
+
+if [ -x $JAVA_HOME/bin/java ]; then
+    JVM=$JAVA_HOME/bin/java
+fi
+
+nohup $JVM $INFRA_SOLR_METRICS_OPTS -classpath "$sdir:$sdir/libs/*" org.apache.ambari.solr.metrics.SolrMetricsApplication ${1+"$@"} &

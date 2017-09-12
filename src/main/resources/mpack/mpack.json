@@ -1,3 +1,37 @@
 {
-
+  "type": "full-release",
+  "name": "infra-solr-metrics-ambari-mpack",
+  "version": "1.0.0",
+  "description": "Infra Solr Metrics Management Pack",
+  "prerequisites": {
+    "min_ambari_version": "2.5.0.0",
+    "max-ambari-version" : ""
+  },
+  "artifacts": [
+    {
+      "name": "hdp-infra-solr-metrics-addon-service-definitions",
+      "type": "stack-addon-service-definitions",
+      "source_dir": "hdp-addon-services",
+      "service_versions_map": [
+        {
+          "service_name" : "INFRA_SOLR_METRICS",
+          "service_version" : "1.0.0",
+          "applicable_stacks" : [
+            {
+              "stack_name" : "HDP",
+              "stack_version" : "2.4"
+            },
+            {
+              "stack_name" : "HDP",
+              "stack_version" : "2.5"
+            },
+            {
+              "stack_name" : "HDP",
+              "stack_version" : "2.6"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
