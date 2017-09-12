@@ -44,6 +44,7 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 ext.src = 'src/main/resources/'
+ext.distPackageName = 'ams-solr-metrics'
 
 repositories {
   mavenCentral()
@@ -75,7 +76,7 @@ task buildTar(dependsOn: [clean, distTar]) {
 
 jar {
   baseName = 'ams-solr-metrics-mpack'
-  version = '0.1.0'
+  version = '1.0.0'
 }
 
 configurations {
@@ -86,4 +87,51 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter:1.5.6.RELEASE")
   compile("org.springframework.boot:spring-boot-starter-log4j2:1.3.8.RELEASE")
   compile("org.apache.ambari:ambari-metrics-common:2.5.1.0.0")
+}
+
+task createPackage(type: Copy, dependsOn: [build]) {
+  into "$buildDir/package/"
+  into('libs') {
+    from "$buildDir/libs/"
+  }
+  from "$buildDir/resources/main/log4j2.xml"
+  from "$buildDir/resources/main/infra-solr-metrics.properties"
+  from "$buildDir/resources/main/scripts"
+  exclude '*.original'
+}
+
+ospackage {
+  packageName = "${distPackageName}"
+  version = "1.0.0"
+  release = "1"
+  os = LINUX
+  user = 'root'
+  permissionGroup = 'root'
+  license = "APL2"
+  summary = "External Apache Solr sink to collect data in AMS."
+  directory("/var/log/${distPackageName}", 644)
+  directory("/var/run/${distPackageName}", 644)
+  directory("/usr/lib/${distPackageName}", 644)
+  directory("/etc/${distPackageName}/conf", 644)
+
+  into "/usr/lib/${distPackageName}"
+
+  from "${buildDir}/package/infra-solr-metrics.sh"
+  from "${buildDir}/package/infra-solr-metrics-env.sh"
+
+  from ("${buildDir}/package/libs") {
+    into "libs"
+  }
+  from("${buildDir}/package/log4j2.xml") {
+    into "/etc/${distPackageName}/conf"
+  }
+  from("${buildDir}/package/infra-solr-metrics.properties") {
+    into "/etc/${distPackageName}/conf"
+  }
+}
+
+task rpm(type: Rpm, dependsOn: [createPackage]) {
+}
+
+task deb(type: Deb, dependsOn: [createPackage]) {
 }
