@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jmx.support.MBeanServerConnectionFactoryBean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.net.MalformedURLException;
 
@@ -36,6 +37,9 @@ public class SolrJmxConnectionConfig {
   @Value("${infra.solr.jmx.url:}")
   private String serviceUrl;
 
+  @Value("${infra.solr.metrics.thread.pool.size:2}")
+  private Integer taskSchedulerThreadPoolSize;
+
   @Bean
   public MBeanServerConnectionFactoryBean clientConnector() throws MalformedURLException {
     if (StringUtils.isNotEmpty(serviceUrl)) {
@@ -46,5 +50,12 @@ public class SolrJmxConnectionConfig {
       logger.warn("JMX service url for Solr is missing. JMX export to AMS won't work.");
       return null;
     }
+  }
+
+  @Bean
+  public  ThreadPoolTaskScheduler  taskScheduler(){
+    ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+    taskScheduler.setPoolSize(taskSchedulerThreadPoolSize);
+    return  taskScheduler;
   }
 }
