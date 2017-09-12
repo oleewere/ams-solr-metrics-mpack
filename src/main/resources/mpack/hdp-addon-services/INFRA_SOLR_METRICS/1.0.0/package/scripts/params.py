@@ -65,7 +65,7 @@ metrics_collector_hosts = ",".join(config['clusterHostInfo']['metrics_collector_
 metrics_collector_port = str(get_port_from_url(config['configurations']['ams-site']['timeline.metrics.service.webapp.address']))
 
 infra_solr_metrics_properties = {}
-infra_solr_metrics_properties = dict(infra_solr_metrics_properties.items() + dict(config['configurations']['infra-solr-properties']).items())
+infra_solr_metrics_properties = dict(infra_solr_metrics_properties.items() + dict(config['configurations']['infra-solr-metrics-properties']).items())
 infra_solr_metrics_properties['infra.solr.jmx.url'] = format(infra_solr_metrics_properties['infra.solr.jmx.url'])
 infra_solr_metrics_properties['infra.solr.metrics.ams.collector.hosts'] = format(infra_solr_metrics_properties['infra.solr.metrics.ams.collector.hosts'])
 infra_solr_metrics_properties['infra.solr.metrics.ams.collector.port'] = format(infra_solr_metrics_properties['infra.solr.metrics.ams.collector.port'])

@@ -44,7 +44,7 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 ext.src = 'src/main/resources/'
-ext.distPackageName = 'ams-solr-metrics'
+ext.distPackageName = 'ambari-infra-solr-metrics'
 
 repositories {
   mavenCentral()
