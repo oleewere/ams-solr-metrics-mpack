@@ -58,25 +58,16 @@ public class SceduledSolrMetricsTask {
   @Value("${infra.solr.metrics.core.push.rate:30000}")
   private String waitMillisecondsPerCore;
 
+  @Value("${infra.solr.metrics.core.aggregated:true}")
+  private boolean aggregateCoreMetrics;
+
   @Scheduled(fixedDelayString = "${infra.solr.metrics.node.push.rate}")
   public void reportNodeMetrics() throws Exception {
     logger.info("Start gather and push Solr node metrics");
     if (solrJmxDataCollector != null) {
       List<SolrMetricsData> nodeMetricData = solrJmxDataCollector.collectNodeJmxData();
       long currMs = System.currentTimeMillis();
-      TimelineMetrics timelineMetrics = new TimelineMetrics();
-      for (SolrMetricsData solrMetricsData : nodeMetricData) {
-        TimelineMetric timelineMetric = new TimelineMetric();
-        timelineMetric.setAppId(nodeAppName);
-        timelineMetric.setMetricName(solrMetricsData.getMetricsName());
-        timelineMetric.setType(solrMetricsData.getType());
-        timelineMetric.setStartTime(currMs);
-        timelineMetric.setHostName(solrMetricsSink.getHostname());
-        TreeMap<Long, Double> values = new TreeMap<>();
-        values.put(currMs, solrMetricsData.getValue());
-        timelineMetric.setMetricValues(values);
-        timelineMetrics.addOrMergeTimelineMetric(timelineMetric);
-      }
+      TimelineMetrics timelineMetrics = createTimlineMetrics(currMs, nodeMetricData, nodeAppName);
       solrMetricsSink.emitMetrics(timelineMetrics);
     } else {
       logger.info("JMX client has not initialized yet.");
@@ -88,33 +79,54 @@ public class SceduledSolrMetricsTask {
   public void reportCoreMetrics() throws Exception {
     logger.info("Start gather and push Solr core metrics");
     if (solrJmxDataCollector != null) {
-      Map<String, List<SolrMetricsData>> nodeMetricData = solrJmxDataCollector.collectCoreJmxData();
       long currMs = System.currentTimeMillis();
-      if (!nodeMetricData.isEmpty()) {
-        for(Map.Entry<String, List<SolrMetricsData>> entry : nodeMetricData.entrySet()) {
-          TimelineMetrics timelineMetrics = new TimelineMetrics();
-          for (SolrMetricsData solrMetricsData : entry.getValue()) {
-            TimelineMetric timelineMetric = new TimelineMetric();
-            timelineMetric.setAppId(coreAppName);
-            // TODO: use core name inside metrics name
-            //String formattedCore = entry.getKey().replaceAll("solr/", "solr_cores.") + ".";
-            //timelineMetric.setMetricName(formattedCore + solrMetricsData.getMetricsName());
-            timelineMetric.setMetricName(solrMetricsData.getMetricsName());
-            timelineMetric.setType(solrMetricsData.getType());
-            timelineMetric.setStartTime(currMs);
-            timelineMetric.setHostName(solrMetricsSink.getHostname());
-            TreeMap<Long, Double> values = new TreeMap<>();
-            values.put(currMs, solrMetricsData.getValue());
-            timelineMetric.setMetricValues(values);
-            timelineMetrics.addOrMergeTimelineMetric(timelineMetric);
+      if (aggregateCoreMetrics) {
+        List<SolrMetricsData> aggregatedCoreMetricData = solrJmxDataCollector.collectAggregatedCoreJmxData();
+        TimelineMetrics timelineMetrics = createTimlineMetrics(currMs, aggregatedCoreMetricData, coreAppName);
+        solrMetricsSink.emitMetrics(timelineMetrics);
+      } else {
+        Map<String, List<SolrMetricsData>> coreMetricData = solrJmxDataCollector.collectCoreJmxData();
+        if (!coreMetricData.isEmpty()) {
+          for (Map.Entry<String, List<SolrMetricsData>> entry : coreMetricData.entrySet()) {
+            TimelineMetrics timelineMetrics = new TimelineMetrics();
+            for (SolrMetricsData solrMetricsData : entry.getValue()) {
+              TimelineMetric timelineMetric = new TimelineMetric();
+              timelineMetric.setAppId(coreAppName);
+              String formattedCore = entry.getKey().replaceAll("solr/", "solr_cores.") + ".";
+              timelineMetric.setMetricName(formattedCore + solrMetricsData.getMetricsName());
+              timelineMetric.setType(solrMetricsData.getType());
+              timelineMetric.setStartTime(currMs);
+              timelineMetric.setHostName(solrMetricsSink.getHostname());
+              TreeMap<Long, Double> values = new TreeMap<>();
+              values.put(currMs, solrMetricsData.getValue());
+              timelineMetric.setMetricValues(values);
+              timelineMetrics.addOrMergeTimelineMetric(timelineMetric);
+            }
+            solrMetricsSink.emitMetrics(timelineMetrics);
           }
-          solrMetricsSink.emitMetrics(timelineMetrics);
         }
       }
     } else {
       logger.info("JMX client has not initialized yet.");
     }
     logger.info("Wait {} milliseconds until next execution (Solr cores)...", waitMillisecondsPerCore);
+  }
+
+  private TimelineMetrics createTimlineMetrics(long currMs, List<SolrMetricsData> aggregatedCoreMetricData, String appId) {
+    TimelineMetrics timelineMetrics = new TimelineMetrics();
+    for (SolrMetricsData solrMetricsData : aggregatedCoreMetricData) {
+      TimelineMetric timelineMetric = new TimelineMetric();
+      timelineMetric.setAppId(appId);
+      timelineMetric.setMetricName(solrMetricsData.getMetricsName());
+      timelineMetric.setType(solrMetricsData.getType());
+      timelineMetric.setStartTime(currMs);
+      timelineMetric.setHostName(solrMetricsSink.getHostname());
+      TreeMap<Long, Double> values = new TreeMap<>();
+      values.put(currMs, solrMetricsData.getValue());
+      timelineMetric.setMetricValues(values);
+      timelineMetrics.addOrMergeTimelineMetric(timelineMetric);
+    }
+    return timelineMetrics;
   }
 
   @PostConstruct

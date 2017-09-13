@@ -58,6 +58,15 @@
     <description></description>
     <on-ambari-upgrade add="false"/>
   </property>
+  <property>
+    <name>infra.solr.metrics.core.aggregated</name>
+    <value>true</value>
+    <description></description>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
+    <on-ambari-upgrade add="false"/>
+  </property>
 
   <property>
     <name>infra.solr.metrics.ams.ssl.keystore.path</name>

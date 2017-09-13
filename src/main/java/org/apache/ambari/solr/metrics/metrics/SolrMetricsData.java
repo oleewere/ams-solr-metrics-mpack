@@ -22,13 +22,15 @@ public class SolrMetricsData {
   private final String metricsName;
   private final Double value;
   private final String type;
+  private final String core;
   private final boolean isPointInTime;
 
-  public SolrMetricsData(String metricsName, Double value, boolean isPointInTime, String type) {
+  public SolrMetricsData(String metricsName, Double value, boolean isPointInTime, String type, String core) {
     this.metricsName = metricsName;
     this.value = value;
     this.isPointInTime = isPointInTime;
     this.type = type;
+    this.core = core;
   }
 
   public String getMetricsName() {
@@ -45,5 +47,9 @@ public class SolrMetricsData {
 
   public String getType() {
     return type;
+  }
+
+  public String getCore() {
+    return core;
   }
 }

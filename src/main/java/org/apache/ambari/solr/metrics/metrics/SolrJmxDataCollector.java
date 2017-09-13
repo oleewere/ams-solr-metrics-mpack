@@ -49,19 +49,54 @@ public class SolrJmxDataCollector {
     }
     CompositeDataSupport nonHeapMemoryUsage = (CompositeDataSupport) mbsc.getAttribute(new ObjectName("java.lang:type=Memory"), "NonHeapMemoryUsage");
     // TODO: add outher metrics as well
-    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.system.processCpuLoad", cpuProcessLoad,true, "Double"));
-    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.memory.used", heapUsed.doubleValue(),true, "Long"));
+    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.system.processCpuLoad", cpuProcessLoad,true, "Double", null));
+    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.memory.used", heapUsed.doubleValue(),true, "Long", null));
 
     return solrNodeMetricsList;
   }
 
+  public List<SolrMetricsData> collectAggregatedCoreJmxData() throws Exception {
+    List<SolrMetricsData> solrCoreMetricsData = getSolrCoreMetricsData();
+    final Map<String, SolrMetricsData> metricNameAndData = new HashMap<>();
+    for (SolrMetricsData solrMetricsData : solrCoreMetricsData) {
+      if (metricNameAndData.containsKey(solrMetricsData.getMetricsName())) {
+        SolrMetricsData actualMetric = metricNameAndData.get(solrMetricsData.getMetricsName());
+        SolrMetricsData newMetric = new SolrMetricsData(
+          actualMetric.getMetricsName(),actualMetric.getValue() + solrMetricsData.getValue(),
+          actualMetric.isPointInTime(), actualMetric.getType(), null);
+        metricNameAndData.put(actualMetric.getMetricsName(), newMetric);
+
+      } else {
+        metricNameAndData.put(solrMetricsData.getMetricsName(),
+          new SolrMetricsData(solrMetricsData.getMetricsName(), solrMetricsData.getValue(),
+            solrMetricsData.isPointInTime(), solrMetricsData.getType(), null));
+      }
+    }
+    return metricNameAndData.isEmpty() ? new ArrayList<>() : new ArrayList<>(metricNameAndData.values());
+  }
+
   public Map<String, List<SolrMetricsData>> collectCoreJmxData() throws Exception {
-    Map<String, List<SolrMetricsData>> metricsPerCore = new HashMap<>();
+    final Map<String, List<SolrMetricsData>> metricsPerCore = new HashMap<>();
+    final List<SolrMetricsData> solrCoreMetricsList = getSolrCoreMetricsData();
+    for (SolrMetricsData solrMetricsData : solrCoreMetricsList) {
+      if (metricsPerCore.containsKey(solrMetricsData.getCore())) {
+        List<SolrMetricsData> existingList = metricsPerCore.get(solrMetricsData.getCore());
+        existingList.add(solrMetricsData);
+      } else {
+        List<SolrMetricsData> newList = new ArrayList<>();
+        newList.add(solrMetricsData);
+        metricsPerCore.put(solrMetricsData.getCore(), newList);
+      }
+    }
+    return metricsPerCore;
+  }
+
+  private List<SolrMetricsData> getSolrCoreMetricsData() throws Exception {
     String[] domains = mbsc.getDomains();
     String[] solrCores = filterCores(domains);
+    List<SolrMetricsData> solrCoreMetricsList = new ArrayList<>();
     if (solrCores.length > 0) {
       for (String solrCore : solrCores) {
-        List<SolrMetricsData> solrCoreMetricsList = new ArrayList<>();
         ObjectName updateHandlerObjectName = new ObjectName(String.format("%s:type=updateHandler,id=org.apache.solr.update.DirectUpdateHandler2", solrCore));
         Long adds = (Long) mbsc.getAttribute(updateHandlerObjectName, "adds");
         Long deletesById = (Long) mbsc.getAttribute(updateHandlerObjectName, "deletesById");
@@ -72,19 +107,19 @@ public class SolrJmxDataCollector {
         Long transactionLogsTotalNumber = (Long) mbsc.getAttribute(updateHandlerObjectName, "transaction_logs_total_number");
 
         /* TODO: commits, autocommits, soft autocommits */
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.adds", adds.doubleValue(), true, "Long"));
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.deletesById", deletesById.doubleValue(), true, "Long"));
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.deletesByQuery", deletesByQuery.doubleValue(), true, "Long"));
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.docsPending", docsPending.doubleValue(), true, "Long"));
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.errors", errors.doubleValue(), true, "Long"));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.adds", adds.doubleValue(), true, "Long", solrCore));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.deletesById", deletesById.doubleValue(), true, "Long", solrCore));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.deletesByQuery", deletesByQuery.doubleValue(), true, "Long", solrCore));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.docsPending", docsPending.doubleValue(), true, "Long", solrCore));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.errors", errors.doubleValue(), true, "Long", solrCore));
         // file in bytes
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.transaction_logs_total_size", transactionLogsTotalSize.doubleValue(), true, "Long"));
-        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.transaction_logs_total_number", transactionLogsTotalNumber.doubleValue(), true, "Long"));
-        metricsPerCore.put(solrCore, solrCoreMetricsList);
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.transaction_logs_total_size",
+          transactionLogsTotalSize.doubleValue(), true, "Long", solrCore));
+        solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.transaction_logs_total_number",
+          transactionLogsTotalNumber.doubleValue(), true, "Long", solrCore));
       }
     }
-
-    return metricsPerCore;
+    return solrCoreMetricsList;
   }
 
   private String[] filterCores(String[] domains) {
