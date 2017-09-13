@@ -44,8 +44,9 @@ java_exec = format("{java64_home}/bin/java")
 user_group = config['configurations']['cluster-env']['user_group']
 infra_solr_user = config['configurations']['infra-solr-env']['infra_solr_user']
 infra_solr_jmx_port = default('configurations/infra-solr-env/infra_solr_jmx_port', '18886')
-infra_solr_local_hostname = default('configurations/infra-solr-metrics-env/infra_solr_local_hostname', config['hostname'].lower())
 
+hostname = config['hostname'].lower()
+infra_solr_local_hostname = format(config['configurations']['infra-solr-metrics-env']['infra_solr_local_hostname'])
 infra_solr_metrics_conf_dir = "/etc/ambari-infra-solr-metrics/conf"
 infra_solr_metrics_usr_dir = "/usr/lib/ambari-infra-solr-metrics"
 infra_solr_metrics_log_dir = default('configurations/infra-solr-metrics-env/infra_solr_metrics_log_dir', '/var/log/ambari-infra-solr-metrics')
@@ -53,7 +54,6 @@ infra_solr_metrics_pid_dir = status_params.infra_solr_metrics_piddir
 infra_solr_metrics_pidfile = status_params.infra_solr_metrics_pidfile
 
 if security_enabled:
-  _hostname_lowercase = config['hostname'].lower()
   infra_solr_jaas_file = '/etc/ambari-infra-solr/conf/infra_solr_jaas.conf'
 
 metrics_http_policy = config['configurations']['ams-site']['timeline.metrics.service.http.policy']
