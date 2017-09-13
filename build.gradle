@@ -40,11 +40,13 @@ apply plugin: 'nebula.ospackage'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'project-report'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = "${javaVersion}"
+targetCompatibility = "${javaVersion}"
 
 ext.src = 'src/main/resources/'
 ext.distPackageName = 'ambari-infra-solr-metrics'
+ext.versionNumber = "${version}"
+ext.releaseNumber = "${releaseNumber}"
 
 repositories {
   mavenCentral()
@@ -76,7 +78,7 @@ task buildTar(dependsOn: [clean, distTar]) {
 
 jar {
   baseName = 'ambari-solr-metrics-sink'
-  version = '1.0.0'
+  version = "${version}"
 }
 
 configurations {
@@ -86,7 +88,7 @@ configurations {
 dependencies {
   compile("org.springframework.boot:spring-boot-starter:1.5.6.RELEASE")
   compile("org.springframework.boot:spring-boot-starter-log4j2:1.3.8.RELEASE")
-  compile("org.apache.ambari:ambari-metrics-common:2.5.1.0.0")
+  compile("org.apache.ambari:ambari-metrics-common:${ambariMetricsCommonVersion}")
 }
 
 task createPackage(type: Copy, dependsOn: [buildTar, build]) {
@@ -102,8 +104,8 @@ task createPackage(type: Copy, dependsOn: [buildTar, build]) {
 
 ospackage {
   packageName = "${distPackageName}"
-  version = "1.0.0"
-  release = "1"
+  version = "${versionNumber}"
+  release = "${releaseNumber}"
   os = LINUX
   user = 'root'
   permissionGroup = 'root'

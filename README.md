@@ -8,7 +8,7 @@ cd ams-solr-metrics-mpack
 ```
 Or optionally you can download the actual mpack from here:
 ```bash
-curl -k -O -L https://github.com/oleewere/ams-solr-metrics-mpack/releases/download/1.0.0/ams-solr-metrics-mpack-0.1.0.tar.gz
+curl -k -O -L https://github.com/oleewere/ams-solr-metrics-mpack/releases/download/1.0.0/ams-solr-metrics-mpack-1.0.0.tar.gz
 ```
 
 ## Install AMS Solr Sink mpack:
@@ -20,7 +20,7 @@ ambari-server stop
 
 Install Solr mpack:
 ```bash
-ambari-server install-mpack --mpack=/my-path/ams-solr-metrics-mpack-0.1.0.tar.gz --verbose
+ambari-server install-mpack --mpack=/my-path/ams-solr-metrics-mpack-1.0.0.tar.gz --verbose
 ```
 
 Start Ambari Server
