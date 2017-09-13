@@ -72,7 +72,13 @@ public class SolrJmxDataCollector {
             solrMetricsData.isPointInTime(), solrMetricsData.getType(), null));
       }
     }
-    return metricNameAndData.isEmpty() ? new ArrayList<>() : new ArrayList<>(metricNameAndData.values());
+    final List<SolrMetricsData> result;
+    if (metricNameAndData.isEmpty()) {
+      result = new ArrayList<>();
+    } else {
+      result = new ArrayList<>(metricNameAndData.values());
+    }
+    return result;
   }
 
   public Map<String, List<SolrMetricsData>> collectCoreJmxData() throws Exception {
