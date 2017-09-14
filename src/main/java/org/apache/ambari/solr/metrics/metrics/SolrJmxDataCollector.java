@@ -181,6 +181,7 @@ public class SolrJmxDataCollector {
         addQueryMetrics("select", "org.apache.solr.handler.component.SearchHandler", "/select", solrCore, solrCoreMetricsList);
         addQueryMetrics("update", "org.apache.solr.handler.UpdateRequestHandler", "/update", solrCore, solrCoreMetricsList);
         addQueryMetrics("query", "org.apache.solr.handler.component.SearchHandler", "/query", solrCore, solrCoreMetricsList);
+        addQueryMetrics("get", "org.apache.solr.handler.RealTimeGetHandler", "/get", solrCore, solrCoreMetricsList);
 
         /* TODO: commits, autocommits, soft autocommits */
         solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.adds", adds.doubleValue(), true, "Long", solrCore));
@@ -248,24 +249,12 @@ public class SolrJmxDataCollector {
     ObjectName queryHandlerObjectName = new ObjectName(String.format("%s:type=%s,id=%s", solrCore, type, queryClass));
     Long requests = (Long) mbsc.getAttribute(queryHandlerObjectName, "requests");
     Double avgRequestsPerSec = (Double) mbsc.getAttribute(queryHandlerObjectName, "avgRequestsPerSecond");
-    Double _5minRateReqsPerSecond = (Double) mbsc.getAttribute(queryHandlerObjectName, "5minRateReqsPerSecond");
-    Double _15minRateReqsPerSecond = (Double) mbsc.getAttribute(queryHandlerObjectName, "15minRateReqsPerSecond");
     Double avgTimePerRequest = (Double) mbsc.getAttribute(queryHandlerObjectName,"avgTimePerRequest");
     Double medianRequestTime = (Double) mbsc.getAttribute(queryHandlerObjectName,"medianRequestTime");
-    Double _75thPcRequestTime = (Double) mbsc.getAttribute(queryHandlerObjectName,"75thPcRequestTime");
-    Double _95thPcRequestTime = (Double) mbsc.getAttribute(queryHandlerObjectName,"95thPcRequestTime");
-    Double _99thPcRequestTime = (Double) mbsc.getAttribute(queryHandlerObjectName,"99thPcRequestTime");
-    Double _999thPcRequestTime = (Double) mbsc.getAttribute(queryHandlerObjectName,"999thPcRequestTime");
 
     solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.requests", queryName), requests.doubleValue(), true, "Long", solrCore));
     solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.avgRequestsPerSec", queryName), avgRequestsPerSec, true, "Double", solrCore));
-    solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.5minRateReqsPerSecond", queryName), _5minRateReqsPerSecond, true, "Double", solrCore));
-    solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.15minRateReqsPerSecond", queryName), _15minRateReqsPerSecond, true, "Double", solrCore));
     solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.avgTimePerRequest", queryName), avgTimePerRequest, true, "Double", solrCore));
     solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.medianRequestTime", queryName), medianRequestTime, true, "Double", solrCore));
-    solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.75thPcRequestTime", queryName), _75thPcRequestTime, true, "Double", solrCore));
-    solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.95thPcRequestTime", queryName), _95thPcRequestTime, true, "Double", solrCore));
-    solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.99thPcRequestTime", queryName), _99thPcRequestTime, true, "Double", solrCore));
-    solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.999thPcRequestTime", queryName), _999thPcRequestTime, true, "Double", solrCore));
   }
 }
