@@ -21,10 +21,10 @@
     </Properties>
     <Appenders>
         <Appender type="Console" name="Console">
-          <Layout type="PatternLayout" pattern="%d %p [%t] %m%n" />
+          <Layout type="PatternLayout" pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}:%L - %msg%n" />
         </Appender>
         <RollingFile name="File" fileName="${filename}">
-           <PatternLayout pattern="%d %p %C{1.} [%t] %m%n" />
+           <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}:%L - %msg%n" />
            <Policies>
              <TimeBasedTriggeringPolicy />
              <SizeBasedTriggeringPolicy size="10 MB"/>
