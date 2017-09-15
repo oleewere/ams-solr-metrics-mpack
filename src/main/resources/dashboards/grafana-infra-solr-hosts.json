@@ -1,5 +1,5 @@
 {
-  "id": 46,
+  "id": 47,
   "title": "Infra Solr - Hosts",
   "originalTitle": "Infra Solr - Hosts",
   "tags": [
@@ -85,7 +85,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "hide": false,
@@ -162,7 +162,7 @@
             {
               "aggregator": "none",
               "alias": "Heap memory",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.jvm.memory.used",
@@ -178,7 +178,7 @@
             {
               "aggregator": "avg",
               "alias": "Non-Heap memory",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.jvm.non-heap.used",
@@ -271,7 +271,7 @@
             {
               "aggregator": "none",
               "alias": "Thread count",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.jvm.thread.count",
@@ -355,7 +355,7 @@
             {
               "aggregator": "none",
               "alias": "",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.parnew.count",
@@ -429,7 +429,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.parnew.time",
@@ -503,7 +503,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.cms.count",
@@ -514,7 +514,7 @@
                 ""
               ],
               "templatedHost": "oszabo.local",
-              "transform": "none"
+              "transform": "rate"
             }
           ],
           "timeFrom": null,
@@ -577,7 +577,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.cms.time",
@@ -651,7 +651,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.g1oldgen.count",
@@ -662,7 +662,7 @@
                 ""
               ],
               "templatedHost": "oszabo.local",
-              "transform": "none"
+              "transform": "rate"
             }
           ],
           "timeFrom": null,
@@ -725,7 +725,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.g1oldgen.time",
@@ -799,7 +799,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.g1younggen.count",
@@ -810,7 +810,7 @@
                 ""
               ],
               "templatedHost": "oszabo.local",
-              "transform": "none"
+              "transform": "rate"
             }
           ],
           "timeFrom": null,
@@ -873,7 +873,7 @@
           "targets": [
             {
               "aggregator": "none",
-              "app": "solr-host-app",
+              "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.info.gc.g1younggen.time",
@@ -1017,6 +1017,6 @@
   },
   "refresh": false,
   "schemaVersion": 8,
-  "version": 3,
+  "version": 16,
   "links": []
 }

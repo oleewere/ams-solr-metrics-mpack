@@ -1,5 +1,5 @@
 {
-  "id": 45,
+  "id": 48,
   "title": "Infra Solr - Cores",
   "originalTitle": "Infra Solr - Cores",
   "tags": [
@@ -89,7 +89,7 @@
             {
               "aggregator": "none",
               "alias": "adds",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "hosts": "",
@@ -165,7 +165,7 @@
             {
               "aggregator": "none",
               "alias": "deletesById",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.updateHandler.deletesById",
@@ -181,7 +181,7 @@
             {
               "aggregator": "none",
               "alias": "deletesByQuery",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.updateHandler.deletesByQuery",
@@ -256,7 +256,7 @@
             {
               "aggregator": "none",
               "alias": "errors",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.updateHandler.errors",
@@ -331,7 +331,7 @@
             {
               "aggregator": "none",
               "alias": "docsPending",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.updateHandler.docsPending",
@@ -358,6 +358,157 @@
           "y_formats": [
             "short",
             "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 28,
+          "isNew": true,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "none",
+              "alias": "tlog count",
+              "app": "infra-solr-core-app",
+              "downsampleAggregator": "avg",
+              "errors": {},
+              "metric": "solr.admin.mbeans.updateHandler.transaction_logs_total_number",
+              "precision": "default",
+              "refId": "A",
+              "seriesAggregator": "none",
+              "templatedCluster": [
+                ""
+              ],
+              "templatedHost": "oszabo.local",
+              "transform": "none"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Transactional Logs Total Number",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "none",
+            "none"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "decimals": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 29,
+          "isNew": true,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "none",
+              "alias": "tlog size",
+              "app": "infra-solr-core-app",
+              "downsampleAggregator": "avg",
+              "errors": {},
+              "metric": "solr.admin.mbeans.updateHandler.transaction_logs_total_size",
+              "precision": "default",
+              "refId": "A",
+              "seriesAggregator": "none",
+              "templatedCluster": [
+                ""
+              ],
+              "templatedHost": "oszabo.local",
+              "transform": "none"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Transactional Logs Total Size",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "bytes"
           ]
         }
       ],
@@ -416,7 +567,7 @@
             {
               "aggregator": "none",
               "alias": "requests",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.select.requests",
@@ -432,7 +583,7 @@
             {
               "aggregator": "avg",
               "alias": "avgRequestsPerSecond",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.select.avgRequestsPerSecond",
@@ -508,7 +659,7 @@
             {
               "aggregator": "none",
               "alias": "avgTimePerRequest",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.select.avgTimePerRequest",
@@ -524,7 +675,7 @@
             {
               "aggregator": "none",
               "alias": "medianRequestTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.select.medianRequestTime",
@@ -600,7 +751,7 @@
             {
               "aggregator": "none",
               "alias": "requests",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.update.requests",
@@ -616,7 +767,7 @@
             {
               "aggregator": "avg",
               "alias": "avgRequestsPerSecond",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.update.avgRequestsPerSecond",
@@ -692,7 +843,7 @@
             {
               "aggregator": "none",
               "alias": "avgTimePerRequest",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.select.avgTimePerRequest",
@@ -708,7 +859,7 @@
             {
               "aggregator": "none",
               "alias": "medianRequestTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.select.medianRequestTime",
@@ -784,7 +935,7 @@
             {
               "aggregator": "none",
               "alias": "requests",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.get.requests",
@@ -800,7 +951,7 @@
             {
               "aggregator": "avg",
               "alias": "avgRequestsPerSecond",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.get.avgRequestsPerSecond",
@@ -876,7 +1027,7 @@
             {
               "aggregator": "none",
               "alias": "avgTimePerRequest",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.get.avgTimePerRequest",
@@ -892,7 +1043,7 @@
             {
               "aggregator": "none",
               "alias": "medianRequestTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.get.medianRequestTime",
@@ -968,7 +1119,7 @@
             {
               "aggregator": "none",
               "alias": "requests",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.luke.requests",
@@ -984,7 +1135,7 @@
             {
               "aggregator": "avg",
               "alias": "avgRequestsPerSecond",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.luke.avgRequestsPerSecond",
@@ -1060,7 +1211,7 @@
             {
               "aggregator": "none",
               "alias": "avgTimePerRequest",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.luke.avgTimePerRequest",
@@ -1076,7 +1227,7 @@
             {
               "aggregator": "none",
               "alias": "medianRequestTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.luke.medianRequestTime",
@@ -1168,7 +1319,7 @@
             {
               "aggregator": "avg",
               "alias": "avgRequestsPerSecond",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.query.avgRequestsPerSecond",
@@ -1244,7 +1395,7 @@
             {
               "aggregator": "none",
               "alias": "avgTimePerRequest",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.query.avgTimePerRequest",
@@ -1260,7 +1411,7 @@
             {
               "aggregator": "none",
               "alias": "medianRequestTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.queryHandler.query.medianRequestTime",
@@ -1344,7 +1495,7 @@
             {
               "aggregator": "none",
               "alias": "hitratio",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.filterCache.hitratio",
@@ -1419,7 +1570,7 @@
             {
               "aggregator": "none",
               "alias": "size",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.filterCache.size",
@@ -1494,7 +1645,7 @@
             {
               "aggregator": "none",
               "alias": "warmupTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.filterCache.warmupTime",
@@ -1569,7 +1720,7 @@
             {
               "aggregator": "none",
               "alias": "hitratio",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.documentCache.hitratio",
@@ -1644,7 +1795,7 @@
             {
               "aggregator": "avg",
               "alias": "size",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.documentCache.size",
@@ -1719,7 +1870,7 @@
             {
               "aggregator": "none",
               "alias": "warmupTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.documentCache.warmupTime",
@@ -1794,7 +1945,7 @@
             {
               "aggregator": "none",
               "alias": "hitratio",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.queryResultCache.hitratio",
@@ -1869,7 +2020,7 @@
             {
               "aggregator": "none",
               "alias": "size",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.queryResultCache.size",
@@ -1944,7 +2095,7 @@
             {
               "aggregator": "none",
               "alias": "warmupTime",
-              "app": "solr-core-app",
+              "app": "infra-solr-core-app",
               "downsampleAggregator": "avg",
               "errors": {},
               "metric": "solr.admin.mbeans.cache.queryResultCache.warmupTime",
@@ -2087,6 +2238,6 @@
   },
   "refresh": false,
   "schemaVersion": 8,
-  "version": 1,
+  "version": 28,
   "links": []
 }
