@@ -46,10 +46,10 @@ public class SceduledSolrMetricsTask {
   @Autowired
   private SolrJmxDataCollector solrJmxDataCollector;
 
-  @Value("${infra.solr.metrics.node.app.name:solr-host-app}")
+  @Value("${infra.solr.metrics.node.app.name:infra-solr-host-app}")
   private String nodeAppName;
 
-  @Value("${infra.solr.metrics.core.app.name:solr-core-app}")
+  @Value("${infra.solr.metrics.core.app.name:infra-solr-core-app}")
   private String coreAppName;
 
   @Value("${infra.solr.metrics.node.push.rate:20000}")
