@@ -182,6 +182,7 @@ public class SolrJmxDataCollector {
         addQueryMetrics("update", "org.apache.solr.handler.UpdateRequestHandler", "/update", solrCore, solrCoreMetricsList);
         addQueryMetrics("query", "org.apache.solr.handler.component.SearchHandler", "/query", solrCore, solrCoreMetricsList);
         addQueryMetrics("get", "org.apache.solr.handler.RealTimeGetHandler", "/get", solrCore, solrCoreMetricsList);
+        addQueryMetrics("luke", "org.apache.solr.handler.admin.LukeRequestHandler", "/admin/luke", solrCore, solrCoreMetricsList);
 
         /* TODO: commits, autocommits, soft autocommits */
         solrCoreMetricsList.add(new SolrMetricsData("solr.admin.mbeans.updateHandler.adds", adds.doubleValue(), true, "Long", solrCore));
