@@ -3,8 +3,7 @@
   "title": "Infra Solr - Hosts",
   "originalTitle": "Infra Solr - Hosts",
   "tags": [
-    "solr",
-    "builtin",
+    "infra-solr",
     "2.6.0.0"
   ],
   "style": "dark",
