@@ -905,10 +905,148 @@
       ],
       "showTitle": true,
       "title": "JVM - GC stats"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "fill": 0,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "height": "",
+          "id": 14,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "ESTABLISHED",
+              "app": "infra-solr-host-app",
+              "cluster": "",
+              "downsampleAggregator": "avg",
+              "errors": {},
+              "hosts": "",
+              "metric": "solr.network.connections.ESTABLISHED",
+              "precision": "default",
+              "refId": "A",
+              "seriesAggregator": "none",
+              "templatedCluster": [
+                ""
+              ],
+              "templatedHost": "oszabo.local",
+              "transform": "none"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "CLOSE_WAIT",
+              "app": "infra-solr-host-app",
+              "downsampleAggregator": "avg",
+              "errors": {},
+              "metric": "solr.network.connections.CLOSE_WAIT",
+              "precision": "default",
+              "refId": "B",
+              "seriesAggregator": "none",
+              "templatedCluster": [
+                ""
+              ],
+              "templatedHost": "oszabo.local",
+              "transform": "none"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "LISTENING",
+              "app": "infra-solr-host-app",
+              "downsampleAggregator": "avg",
+              "errors": {},
+              "metric": "solr.network.connections.LISTENING",
+              "precision": "default",
+              "refId": "C",
+              "seriesAggregator": "none",
+              "templatedCluster": [
+                ""
+              ],
+              "templatedHost": "oszabo.local",
+              "transform": "none",
+              "hide": false
+            },
+            {
+              "aggregator": "avg",
+              "alias": "TIME_WAIT",
+              "app": "infra-solr-host-app",
+              "downsampleAggregator": "avg",
+              "errors": {},
+              "metric": "solr.network.connections.TIME_WAIT",
+              "precision": "default",
+              "refId": "D",
+              "seriesAggregator": "none",
+              "templatedCluster": [
+                ""
+              ],
+              "templatedHost": "oszabo.local",
+              "transform": "none"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Connection States",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "showTitle": true,
+      "title": "Network Connection States"
     }
   ],
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1017,6 +1155,6 @@
   },
   "refresh": false,
   "schemaVersion": 8,
-  "version": 16,
+  "version": 26,
   "links": []
 }

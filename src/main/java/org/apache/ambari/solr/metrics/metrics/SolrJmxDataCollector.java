@@ -18,6 +18,7 @@
  */
 package org.apache.ambari.solr.metrics.metrics;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,11 @@ import javax.management.InstanceNotFoundException;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeDataSupport;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +61,9 @@ public class SolrJmxDataCollector {
 
   @Value("${infra.solr.metrics.field_value.cache.class:org.apache.solr.search.FastLRUCache}")
   private String fieldValueCacheClass;
+
+  @Value("${infra.solr.metrics.solr.port:8886}")
+  private int solrPort;
 
   public List<SolrMetricsData> collectNodeJmxData() throws Exception {
     List<SolrMetricsData> solrNodeMetricsList = new ArrayList<>();
@@ -100,6 +108,8 @@ public class SolrJmxDataCollector {
     solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.non-heap.used", nonHeapUsed.doubleValue(),true, "Long", null));
     solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.non-heap.max", nonHeapMax.doubleValue(),true, "Long", null));
     solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.thread.count", threadCount.doubleValue(),true, "Long", null));
+
+    addNetworkMetrics(solrNodeMetricsList);
 
     return solrNodeMetricsList;
   }
@@ -257,5 +267,40 @@ public class SolrJmxDataCollector {
     solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.avgRequestsPerSec", queryName), avgRequestsPerSec, true, "Double", solrCore));
     solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.avgTimePerRequest", queryName), avgTimePerRequest, true, "Double", solrCore));
     solrCoreMetricsList.add(new SolrMetricsData(String.format("solr.admin.mbeans.queryHandler.%s.medianRequestTime", queryName), medianRequestTime, true, "Double", solrCore));
+  }
+
+  private void addNetworkMetrics(List<SolrMetricsData> solrNodeMetricsList) {
+    Runtime rt = Runtime.getRuntime();
+    List<String> supportedConnectionStates = supportedTcpConnectionStates();
+    String command = createNetstatCommand(supportedConnectionStates);
+    String[] commands = {"/bin/sh", "-c", command};
+    Process proc = null;
+    try {
+      proc = rt.exec(commands);
+      BufferedReader br = new BufferedReader(
+        new InputStreamReader(proc.getInputStream()));
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] splitted = line.trim().split(" ");
+        if (splitted.length == 2) {
+          if (supportedConnectionStates.contains(splitted[1])) {
+            Integer value = Integer.parseInt(splitted[0]);
+            SolrMetricsData networkData = new SolrMetricsData("solr.network.connections." + splitted[1], value.doubleValue(), true, "Long", null);
+            solrNodeMetricsList.add(networkData);
+          }
+        }
+      }
+    } catch (IOException e) {
+      logger.error("Error during execute command: ", StringUtils.join(commands, " "), e);
+    }
+  }
+
+  private String createNetstatCommand(List<String> supportedConnectionStates) {
+    return "netstat -nat | grep :" + solrPort+ " | egrep \"" +
+      StringUtils.join(supportedConnectionStates, "|") + "\" | awk '{print$6}' | sort | uniq -c | sort -n";
+  }
+
+  private List<String> supportedTcpConnectionStates() {
+    return Arrays.asList("ESTABLISHED", "LISTENING", "CLOSE_WAIT", "TIME_WAIT");
   }
 }
