@@ -40,7 +40,7 @@
     <name>infra_solr_local_hostname</name>
     <value>localhost</value>
     <description>Local hostname of infra solr, that can be set with -Djava.rmi.server.hostname=localhost for Solr (SOLR_OPTS in infra-solr-env contents)
-      {infra_solr_local_hostname} can be used as well (hostname)</description>
+      {hostname} can be used as well</description>
     <display-name>Infra Solr local hostname</display-name>
     <on-ambari-upgrade add="false"/>
   </property>
