@@ -93,6 +93,8 @@ public class SolrJmxDataCollector {
       cpuProcessLoad = Double.parseDouble(String.format("%.3f", cpuProcessLoad));
     }
 
+    Long openFileDescriptorCount = (Long) mbsc.getAttribute(new ObjectName("java.lang:type=OperatingSystem"), "OpenFileDescriptorCount");
+
     addToMetricListIfNotNUll("solr.admin.info.gc.g1oldgen.count", g1OldGenCollCount, solrNodeMetricsList);
     addToMetricListIfNotNUll("solr.admin.info.gc.g1oldgen.time", g1OldGenCollTime, solrNodeMetricsList);
     addToMetricListIfNotNUll("solr.admin.info.gc.g1younggen.count", g1YoungGenCollCount, solrNodeMetricsList);
@@ -103,6 +105,7 @@ public class SolrJmxDataCollector {
     addToMetricListIfNotNUll("solr.admin.info.gc.parnew.time", g1ParNewCollTime, solrNodeMetricsList);
 
     solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.system.processCpuLoad", cpuProcessLoad,true, "Double", null));
+    solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.system.openFileDescriptorCount", openFileDescriptorCount.doubleValue(),true, "Long", null));
     solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.memory.used", heapUsed.doubleValue(),true, "Long", null));
     solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.memory.max", heapMax.doubleValue(),true, "Long", null));
     solrNodeMetricsList.add(new SolrMetricsData("solr.admin.info.jvm.non-heap.used", nonHeapUsed.doubleValue(),true, "Long", null));
