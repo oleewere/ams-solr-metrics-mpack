@@ -1,5 +1,5 @@
 {
-  "id": 47,
+  "id": 45,
   "title": "Infra Solr - Hosts",
   "originalTitle": "Infra Solr - Hosts",
   "tags": [
@@ -997,6 +997,7 @@
               "app": "infra-solr-host-app",
               "downsampleAggregator": "avg",
               "errors": {},
+              "hide": false,
               "metric": "solr.network.connections.LISTENING",
               "precision": "default",
               "refId": "C",
@@ -1005,8 +1006,7 @@
                 ""
               ],
               "templatedHost": "oszabo.local",
-              "transform": "none",
-              "hide": false
+              "transform": "none"
             },
             {
               "aggregator": "avg",
@@ -1043,6 +1043,91 @@
       ],
       "showTitle": true,
       "title": "Network Connection States"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 15,
+          "isNew": true,
+          "leftYAxisLabel": "",
+          "legend": {
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "none",
+              "alias": "Open file descriptors",
+              "app": "infra-solr-host-app",
+              "downsampleAggregator": "avg",
+              "errors": {},
+              "metric": "solr.admin.info.system.openFileDescriptorCount",
+              "precision": "default",
+              "refId": "A",
+              "seriesAggregator": "none",
+              "templatedCluster": [
+                ""
+              ],
+              "templatedHost": "oszabo.local",
+              "transform": "none"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Open File Descriptors",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
     }
   ],
   "time": {
@@ -1155,6 +1240,6 @@
   },
   "refresh": false,
   "schemaVersion": 8,
-  "version": 26,
+  "version": 1,
   "links": []
 }
