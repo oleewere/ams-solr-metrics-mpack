@@ -1,7 +1,9 @@
 # AMS Solr Sink for Ambari Infra Solr
 
 ## Generate the mpack from source code
-Download ams-solr-metrics-mpack repository from git then run:
+Before you start, make sure you have ambari-metrics collector is installed in your maven repository. (you can build from ambari source code https://github.com/apache/ambari/tree/trunk/ambari-metrics/ambari-metrics-common, the ambari-metrics-common jar version is inside gradle.properties, but you can redefine that with the `-P` option)
+
+Download ams-solr-metrics-mpack repository from git then run :
 ```bash
 cd ams-solr-metrics-mpack
 ./gradlew clean buildTar
